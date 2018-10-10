@@ -14,9 +14,13 @@
 void OpenAs(const wchar_t *file) {
     OPENASINFO info = {0};
     info.pcszFile = file;
-    info.oaifInFlags = 0;
+    info.oaifInFlags = OAIF_EXEC | OAIF_HIDE_REGISTRATION;
 
     SHOpenWithDialog(NULL, &info);
+}
+
+void Properties(const wchar_t *file) {
+    SHObjectProperties(NULL, SHOP_FILEPATH, file, NULL);
 }
 
 #endif
