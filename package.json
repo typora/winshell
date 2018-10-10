@@ -1,0 +1,18 @@
+{
+  "name": "win-shell",
+  "version": "0.0.1",
+  "description": "some Windows Shell API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install": "node-gyp rebuild",
+    "build:ia32": "node-gyp clean configure build --verbose --arch=ia32",
+    "build:x64": "node-gyp clean configure build --verbose --arch=x64"
+  },
+  "keywords": [
+    "windows"
+  ],
+  "author": "Abner Lee",
+  "license": "MIT",
+  "gypfile": true
+}
