@@ -34,15 +34,15 @@ namespace winshell {
         	std::string file(*str);
         	Properties(toWChar(file.c_str()));
 	}
-
-	void init(Local<Object> exports) {
-	  	NODE_SET_METHOD(exports, "openAs", _open_as);
-		NODE_SET_METHOD(exports, "properties", _properties);
+	
+	NAN_MODULE_INIT(Init) {
+	  Nan::SetMethod(target, "openAs", _open_as);
+	  Nan::SetMethod(target, "properties", _properties);
 	}
-
-	#if NODE_MAJOR_VERSION >= 10
-		NAN_MODULE_WORKER_ENABLED(addon, Init)
-	#else
-		NODE_MODULE(addon, Init)
-	#endif
 }  
+
+#if NODE_MAJOR_VERSION >= 10
+	NAN_MODULE_WORKER_ENABLED(addon, Init)
+#else
+	NODE_MODULE(addon, Init)
+#endif
