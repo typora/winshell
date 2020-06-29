@@ -21,13 +21,18 @@ namespace winshell {
 	}
 
 	void _open_as(const FunctionCallbackInfo<Value>& args) {
-        std::string file(*v8::String::Utf8Value(args[0]->ToString()));
-        OpenAs(toWChar(file.c_str()));
+		// from v8 to cpp
+		v8::Isolate* isolate = args.GetIsolate();
+		v8::String::Utf8Value str(isolate, args[0]);
+        	std::string file(*str);
+        	OpenAs(toWChar(file.c_str()));
 	}
 
 	void _properties(const FunctionCallbackInfo<Value>& args) {
-        std::string file(*v8::String::Utf8Value(args[0]->ToString()));
-        Properties(toWChar(file.c_str()));
+        	v8::Isolate* isolate = args.GetIsolate();
+		v8::String::Utf8Value str(isolate, args[0]);
+        	std::string file(*str);
+        	Properties(toWChar(file.c_str()));
 	}
 
 	void init(Local<Object> exports) {
@@ -35,6 +40,9 @@ namespace winshell {
 		NODE_SET_METHOD(exports, "properties", _properties);
 	}
 
-	NODE_MODULE(addon, init)
-
+	#if NODE_MAJOR_VERSION >= 10
+		NAN_MODULE_WORKER_ENABLED(addon, Init)
+	#else
+		NODE_MODULE(addon, Init)
+	#endif
 }  
