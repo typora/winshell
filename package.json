@@ -12,6 +12,9 @@
   "keywords": [
     "windows"
   ],
+  "dependencies": {
+    "nan": "2.13.2"
+  },
   "author": "Abner Lee",
   "license": "MIT",
   "gypfile": true
