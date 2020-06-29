@@ -1,5 +1,7 @@
 #include <node.h>
 #include <string>
+#include <nan.h>
+
 #include "src/ShellExecuteEx.h"
 
 namespace winshell {
@@ -10,6 +12,7 @@ namespace winshell {
 	using v8::Object;
 	using v8::String;
 	using v8::Value;
+	using v8::Context;
 	
 	wchar_t* toWChar(const char* utf8)
 	{
@@ -24,25 +27,21 @@ namespace winshell {
 		// from v8 to cpp
 		v8::Isolate* isolate = args.GetIsolate();
 		v8::String::Utf8Value str(isolate, args[0]);
-        	std::string file(*str);
-        	OpenAs(toWChar(file.c_str()));
+		std::string file(*str);
+		OpenAs(toWChar(file.c_str()));
 	}
 
 	void _properties(const FunctionCallbackInfo<Value>& args) {
-        	v8::Isolate* isolate = args.GetIsolate();
+		v8::Isolate* isolate = args.GetIsolate();
 		v8::String::Utf8Value str(isolate, args[0]);
-        	std::string file(*str);
-        	Properties(toWChar(file.c_str()));
+		std::string file(*str);
+		Properties(toWChar(file.c_str()));
 	}
 	
-	NAN_MODULE_INIT(init) {
-	  Nan::SetMethod(target, "openAs", _open_as);
-	  Nan::SetMethod(target, "properties", _properties);
+	void init(Local<Object> exports) {
+	  	NODE_SET_METHOD(exports, "openAs", _open_as);
+		NODE_SET_METHOD(exports, "properties", _properties);
 	}
-	
-	#if NODE_MAJOR_VERSION >= 10
+
 	NAN_MODULE_WORKER_ENABLED(addon, init)
-	#else
-	NODE_MODULE(addon, init)
-	#endif
 }
