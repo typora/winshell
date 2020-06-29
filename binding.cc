@@ -41,7 +41,7 @@ namespace winshell {
 	}
 	
 	#if NODE_MAJOR_VERSION >= 10
-	NAN_MODULE_WORKER_ENABLED(addon, Init)
+	NAN_MODULE_WORKER_ENABLED(addon, init)
 	#else
 	NODE_MODULE(addon, init)
 	#endif
