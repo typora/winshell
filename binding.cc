@@ -35,10 +35,14 @@ namespace winshell {
         	Properties(toWChar(file.c_str()));
 	}
 	
-	NAN_MODULE_INIT(Init) {
+	NAN_MODULE_INIT(init) {
 	  Nan::SetMethod(target, "openAs", _open_as);
 	  Nan::SetMethod(target, "properties", _properties);
 	}
 	
+	#if NODE_MAJOR_VERSION >= 10
+	NAN_MODULE_WORKER_ENABLED(addon, Init)
+	#else
 	NODE_MODULE(addon, init)
+	#endif
 }
