@@ -13,7 +13,7 @@
     "windows"
   ],
   "dependencies": {
-    "nan": "2.13.2"
+    "nan": "2.17.0"
   },
   "author": "Abner Lee",
   "license": "MIT",
